@@ -1,0 +1,83 @@
+* D:\LTSpice\Termoreg2\LTSPICE_termoreg\pyltspice\for_py.asc
+V§U6.4V 6.4V 0 6.4
+Rbr1 bridge2 0 7.5k
+Rbrs N008 bridge1 5.4k
+Rbr2 bridge1 0 7.5k
+Rbr3 N004 N008 2.61k
+V§U15V 15V 0 15
+V§Un15V -15V 0 -15
+Rdiff1 N001 bridge1 51k
+Rdiff2 N002 bridge2 51k
+Rdiff4 N002 0 210k
+Rdiff3 A N001 210k
+Rp1 A N009 2.2k
+Rp2 N009 0 6.8k
+Rp3 N010 N009 1Meg
+Rp4 N010 N011 2.2k
+Rp5 N011 0 4.7k
+Rheat 24V Collector 60
+V§Un24 24V 0 24
+Rp7 Collector N014 47k
+Rp8 N014 0 22k
+Rp9 N015 N013 100k
+Rp10 0 N013 150k
+Rp6 N012 N011 1k
+Cp3 N014 N015 2.2µ
+Cp1 N010 N009 0.1µ
+Cdiff1 A N001 0.1µ
+Cp2 N012 0 0.1µ
+Eth VRTk 0 Collector 0 Laplace={Kth}/(180*s+1)*exp(-0.8*s)
+Dbr1 0 N003 zbr1
+Rbrz N003 15V 1.5k
+Rbr4 NC_01 NC_02 4.52k
+XXbrrd N008 bridge2 VRT 0 resvolt3 params: rv=1 a=0
+B1 N005 0 V=if(time<2200,24,if(time>2200,if(time<2203,0,24),24))
+Qp1 Collector N012 0 0 bjtp1
+XXdistb Vrt1 Vrt2 N006 0 resvolt3 params: rv=286.2k a=0
+Bdistb N007 0 V=if(time>3000,1,3000)
+Edistb N006 0 N007 0 Laplace=1/(1*s+1)
+XUdiff1 N002 N001 15V -15V A level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos={vdiffos} En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+Vbr N004 0 7.4
+Bnoise A+noise 0 V=1
+XUp1 N013 N009 15V -15V N010 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+Bth VRT 0 V=V(VRTk)+{ath}
+Idiff1 N001 0 {idiffin}
+
+* block symbol definitions
+.subckt resvolt3 1 2 Vin Vcom
+B1 1 2 V={RV_Ratio}*I(B1)*(V(Vin)-V(Vcom))+Const*I(B1)
+I1 Vcom 0 0
+I2 Vin 0 0
+.param RV_Ratio=rv
+.param Const=a
+.ends resvolt3
+
+.model D D
+.lib C:\Users\Sergey\Documents\LTspiceXVII\lib\cmp\standard.dio
+.model NPN NPN
+.model PNP PNP
+.lib C:\Users\Sergey\Documents\LTspiceXVII\lib\cmp\standard.bjt
+.tran 0 6000 0
+* Wheatstone Bridge
+* Power Supply
+* Input Diff Amplifier
+* Thermostat
+* Power Block
+.model zbr1 AKO:BZX384B6V2 (Bv=6.42)
+* Set Point Disturbance
+.model bjtp1 AKO:TIP31C (Bf={bth}  ikf=0 )
+* Model Congig
+* Noise
+.param noisetime 10
+.param noiselevel 500
+* V=white(time*{noisetime})/{noiselevel}*4+V(A)
+.param kth =75
+.param ath =4000
+.param bth =1000
+.param vdiffos =0
+.param idiffin =0
+* .step param kth list 67.5 75 82.5
+* .step param x list 0 0.1 1
+.lib UniversalOpAmp2.lib
+.backanno
+.end
