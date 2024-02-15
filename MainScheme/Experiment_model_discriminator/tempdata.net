@@ -1,0 +1,201 @@
+* D:\LTSpice\Termoreg2\LTSPICE_termoreg\MainScheme\Experiment_model_discriminator\tempdata.asc
+V§U6.4V 6.4V 0 6.4
+R2 bridge2 0 7.5k
+R4 Vrt1 bridge1 R=if(time<1500,8056,8046)
+R6 bridge1 0 R=if(time<3500,7.5k,if(time>3500,if(time<3501,1,7.5k),7.5k))
+R1 NC_01 NC_02 2.61k
+V§U15V 15V 0 15
+V§Un15V -15V 0 -15
+V§Un24 24V 0 24
+R5 prop N011 33k
+R7 N011 A 10k
+C2 P001 N014 2.2µ
+C6 N015 N018 6.6µ
+R22 N014 A 470k
+R23 diff N015 500k
+R24 A1 N012 10k
+R26 N012 prop 10k
+R27 N012 int 10k
+R28 NC_03 diff 10k
+R29 N018 N017 10k
+C7 diff N015 0.1µ
+C9 prop N011 0.1µ
+E2 VRT 0 Collector 0 Laplace={Acoupling}/({tau}*s+1)
+C1 A1 N012 0.1µ
+D2 0 Vrt1 zen
+R3 Vrt1 15V 1.5k
+Q2 Collector N010 0 0 bjt1
+Rheat1 N007 Collector 60
+R18 N010 N009 2.2k
+C5 N010 0 1µ
+D5 0 N010 D
+R20 Collector N008 20k
+R21 N008 0 10k
+C10 Collector N008 0.1µ
+D4 N013 0 D
+R17 2dof N019 50k
+R30 N021 2dof 10k
+R33 N003 N005 30k
+R34 N001 N003 150k
+R35 N006 N005 150k
+C8 N001 N003 0.1µ
+C11 N006 N005 0.1µ
+R36 N002 N001 20k
+R37 N004 N006 20k
+R38 0 N004 20k
+R39 A N002 20k
+C12 0 N004 0.1µ
+C13 A N002 0.1µ
+R40 int P001 100
+R41 -15V N020 20k
+R42 N020 0 1k
+C14 N023 N022 2.2µ
+R43 colfb N023 100k
+R44 0 colfb 150k
+R45 Collector N022 47k
+R46 N022 0 22k
+D1 0 N013 D
+R19 N019 N020 50k
+R8 bridge2_1 0 7.5k
+R10 bridge1_1 0 R=if(time<3500,7.5k,if(time>3500,if(time<3501,1,7.5k),7.5k))
+R11 NC_04 NC_05 2.61k
+R12 N024 bridge1_1 51k
+R13 N025 bridge2_1 51k
+R16 N025 0 51k
+R47 A_1 N024 51k
+R48 A_1 N027 2.2k
+R49 N027 0 6.8k
+R50 N028 N027 1Meg
+R51 N028 N029 2.2k
+R52 N029 0 4.7k
+Rheat2 N026 Collector_1 60
+R53 Collector_1 N032 47k
+R54 N032 0 22k
+R55 N033 N031 70k
+R56 0 N031 150k
+R57 N030 N029 1k
+C3 N032 N033 1µ
+C4 N028 N027 0.1µ
+C15 A_1 N024 0.1µ
+C16 N030 0 0.1µ
+E4 VRT_1 0 Collector_1 0 Laplace={Acoupling}/({tau}*s+1)
+D3 0 Vrt1_1 zen_1
+R59 Vrt1_1 15V 1.5k
+Q3 Collector_1 N030 0 0 bjt1_1
+R58 Vrt1 bridge2 R=limit(1k,30k,V(VRT)+{rd0})
+R25 Vrt1_1 bridge2_1 R=limit(1k,30k,V(VRT_1)+{rd0})
+R60 Vrt1_1 bridge1_1 R=if(time<1500,8056,8046)
+B1 N026 0 V=if(time<2500,24,if(time>2500,if(time<2501,0,24),24))
+B2 N007 0 V=if(time<2500,24,if(time>2500,if(time<2501,0,24),24))
+B3 A+noise 0 V=white(time*{noisetime})/{noiselevel}*1+V(A)
+B4 A_1+noise 0 V=white(time*{noisetime})/{noiselevel}*4+V(A_1)
+B5 bridge_noise 0 V=white(time*{noisetime})/{noiselevel}
+V1 NC_06 0 -9
+R9 NC_07 NC_08 10
+B6 N016 0 V=if(time<2500,0,if(time>2500,if(time<2501,15,0),0))
+XU1 bridge1 N003 15V -15V N001 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU14 bridge2 N005 15V -15V N006 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU2 N004 N002 15V -15V A level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU3 N008 A1 15V -15V N009 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU4 0 N011 15V -15V prop level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU5 0 N014 15V -15V int level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU6 0 N015 15V -15V diff level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU7 0 N012 15V -15V A1 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU8 0 N019 15V -15V 2dof level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU9 N025 N024 15V -15V A_1 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU10 N031 N027 15V -15V N028 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+R14 bridge2_2 0 7.5k
+R15 bridge1_2 0 R=if(time<3500,7.5k,if(time>3500,if(time<3501,1,7.5k),7.5k))
+R31 NC_09 NC_10 2.61k
+R32 N034 bridge1_2 51k
+R61 N035 bridge2_2 51k
+R62 N035 0 51k
+R63 A_2 N034 51k
+R64 A_2 N040 2.2k
+R65 N040 0 6.8k
+R70 0 N039 22k
+R71 N038 N037 70k
+R72 0 N037 150k
+C17 N039 N038 1µ
+C19 A_2 N034 0.1µ
+E1 VRT_2 0 Collector_2 0 Laplace={Acoupling}/({tau}*s+1)
+D6 0 Vrt1_2 zen_2
+R74 Vrt1_2 15V 1.5k
+R75 Vrt1_2 bridge2_2 R=limit(1k,30k,V(VRT_2)+{rd0})
+R76 Vrt1_2 bridge1_2 R=if(time<1500,8056,8046)
+B7 N036 0 V=if(time<2500,24,if(time>2500,if(time<2501,0,24),24))
+B8 A_2+noise 0 V=white(time*{noisetime})/{noiselevel}*4+V(A_2)
+XU11 N035 N034 15V -15V A_2 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU12 N040 N037 24V -24V Collector_2 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+V§Un1 -24V 0 -24
+R66 N039 Collector_2 47k
+R67 Collector_2 0 R=if(time<2500,1meg,if(time>2500,if(time<2501,1,1meg),1meg))
+.model D D
+.lib C:\Users\Sergey\Documents\LTspiceXVII\lib\cmp\standard.dio
+.model NPN NPN
+.model PNP PNP
+.lib C:\Users\Sergey\Documents\LTspiceXVII\lib\cmp\standard.bjt
+.tran 9500
+* Wheatstone Bridge
+* Supply
+* Termoresistor Model
+* Thermostat Model
+* Power Block
+* .model sw1 SW(Roff=1G Ron=25u Vt=4 Vh=0)
+* PID
+* .param kp=0.5*ku
+* .param kd=3*ku*tu/80
+* .param ki=0.1*ku/tu/1
+* .param tu=0.5
+* .param ku=4.1
+* .param ki=3
+* .ic V(uupr)=0.545k
+.model bjt1 AKO:BCW60D (Bf=600   ikf=0)
+.model zen AKO:BZX384B6V2 (Bv=6.4)
+;dc V1 1 20 0.1
+.option abstol=1e-1
+* .option cshunt=1e-13
+.option gmin=1e-7
+* .option reltol=0.001
+* .step param rinstr list 1k 5k 10k
+* .model awp AKO:BZX384B6V2 (Bv=1.2)
+.meas TRAN Rd AVG V(Vrt1,bridge2)/Ix(x1:1) FROM 800 TO 974
+.meas TRAN Rd2 AVG V(Vrt1,bridge2)/Ix(x1:1) FROM 1200 TO 1400
+* Wheatstone Bridge
+* Diff Amplifier
+* Thermostat Model
+* Power Block
+.model bjt1_1 AKO:BCW60D (Bf=600   ikf=0 )
+.model zen_1 AKO:BZX384B6V2 (Bv=6.4)
+* .model bjt1 AKO:2N4124 (Bf=600  ikf=0 )
+* .step param r5 list 200k 100k 50k
+* .step param r22 list 50k 100k 300k 500k
+* .step param r22 list 100k 150k
+* .step param r5 list 50k 100k
+* Instrumental amplifier
+* Measurements
+* Options
+* Models
+* Params
+* Termoresistor Model
+.param noisetime 10
+.param noiselevel 5000
+* Noise
+* Noise
+* .step param r50 list 1Meg 9Meg
+.param tau 80
+.param Acoupling 90
+.param rd0 6400
+* Wheatstone Bridge
+* Diff Amplifier
+* Thermostat Model
+* Power Block
+.model bjt1_2 AKO:BCW60D (Bf=600   ikf=0)
+.model zen_2 AKO:BZX384B6V2 (Bv=6.4)
+* .model bjt1 AKO:2N4124 (Bf=600  ikf=0 )
+* Termoresistor Model
+* Noise
+* .step param r50 list 1Meg 9Meg
+.lib UniversalOpAmp2.lib
+.backanno
+.end
