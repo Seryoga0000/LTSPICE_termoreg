@@ -1,0 +1,87 @@
+* D:\LTSpice\Termoreg2\LTSPICE_termoreg\OthersScheme\OldScheme\static.asc
+V§U6.4V 6.4V 0 6.4
+V§U15V 15V 0 15
+V§Un15V -15V 0 -15
+V§Un24 24V 0 24
+R8 bridge2_1 0 7.5k
+R10 bridge1_1 0 7.5k
+R12 N001 bridge1_1 51k
+R13 N002 bridge2_1 51k
+R16 N002 0 51k
+R47 A_1 N001 51k
+R48 A_1 N004 2.2k
+R49 N004 0 6.8k
+R50 N005 N004 1Meg
+R51 N005 N006 2.2k
+R52 N006 0 4.7k
+Rheat2 24V Collector_1 60
+R53 Collector_1 N009 47k
+R54 N009 0 22k
+R55 N010 N008 70k
+R56 0 N008 150k
+R57 N007 N006 1k
+C3 N009 N010 1µ
+C4 N005 N004 0.1µ
+C15 A_1 N001 0.1µ
+C16 N007 0 0.1µ
+E4 VRT_1 0 Collector_1 0 Laplace={Acoupling}
+D3 0 N003 zen_1
+R59 N003 15V 1.5k
+Q3 Collector_1 N007 0 0 bjt1_1
+R25 N003 bridge2_1 R=limit(1k,30k,V(VRT_1)+{rd0})
+R60 N003 bridge1_1 8046
+B4 A_1+noise 0 V=white(time*{noisetime})/{noiselevel}*4+V(A_1)
+XU9 N002 N001 15V -15V A_1 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+XU10 N008 N004 15V -15V N005 level2 Avol=250k GBW=10Meg Slew=10Meg Ilimit=25m Rail=0 Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+V§Un1 -24V 0 -24
+.model D D
+.lib C:\Users\Sergey\Documents\LTspiceXVII\lib\cmp\standard.dio
+.model NPN NPN
+.model PNP PNP
+.lib C:\Users\Sergey\Documents\LTspiceXVII\lib\cmp\standard.bjt
+.tran 0 1000 100
+* Supply
+* .model sw1 SW(Roff=1G Ron=25u Vt=4 Vh=0)
+* .param kp=0.5*ku
+* .param kd=3*ku*tu/80
+* .param ki=0.1*ku/tu/1
+* .param tu=0.5
+* .param ku=4.1
+* .param ki=3
+* .ic V(uupr)=0.545k
+.model bjt1 AKO:BCW60D (Bf=600   ikf=0)
+.model zen AKO:BZX384B6V2 (Bv=6.4)
+;dc V1 1 20 0.1
+.option abstol=1e-1
+* .option cshunt=1e-13
+.option gmin=1e-7
+* .option reltol=0.001
+* .model awp AKO:BZX384B6V2 (Bv=1.2)
+.meas TRAN Rd AVG V(Vrt1,bridge2)/Ix(x1:1) FROM 800 TO 974
+.meas TRAN Rd2 AVG V(Vrt1,bridge2)/Ix(x1:1) FROM 1200 TO 1400
+* Wheatstone Bridge
+* Diff Amplifier
+* Thermostat Model
+* Power Block
+.model bjt1_1 AKO:BCW60D (Bf=600   ikf=0 )
+.model zen_1 AKO:BZX384B6V2 (Bv=6.4)
+* .model bjt1 AKO:2N4124 (Bf=600  ikf=0 )
+* .step param r5 list 200k 100k 50k
+* .step param r22 list 50k 100k 300k 500k
+* .step param r22 list 100k 150k
+* .step param r5 list 50k 100k
+* Measurements
+* Options
+* Models
+* Params
+* Termoresistor Model
+.param noisetime 10
+.param noiselevel 5000
+* Noise
+* .step param r50 list 1Meg 9Meg
+.param tau 80
+.param Acoupling 90
+.param rd0 6400
+.lib UniversalOpAmp2.lib
+.backanno
+.end
