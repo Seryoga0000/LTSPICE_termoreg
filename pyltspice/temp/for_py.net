@@ -4,7 +4,7 @@ V§U15V 15V 0 15
 V§Un15V -15V 0 -15
 V§Un24 24V 0 24
 R8 bridge2_1 0 7.5k
-R10 bridge1_1 0 7.5k
+R10 bridge1_1 0 7.5005250000000006k
 R12 N001 bridge1_1 51k
 R13 N002 bridge2_1 51k
 R16 N002 0 51k
